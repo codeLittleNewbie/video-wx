@@ -1,51 +1,34 @@
 <template>
   <div class="video-container">
     <video id="video" src=""></video>
-    <div style="position: absolute;left: 0;top: 0;background: white;">我是选项</div>
+
+    <div class="center-opera">
+      <div>毛泽东三次到才溪分别是哪一年？</div>
+      <van-radio-group v-model="checked" class="mt-10">
+        <van-radio name="1" class="mt-10">单选框 1</van-radio>
+        <van-radio name="2" class="mt-10">单选框 2</van-radio>
+        <van-radio name="3" class="mt-10">单选框 3</van-radio>
+      </van-radio-group>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  dicts: ['com.test.api', 'api'],
-  setup(){
-    const a = 3;
+  data() {
     return {
-      a
-    }
-  },
-  name: "index",
-  data(){
-    return {
-      b: 4,
+      checked: '',
     }
   },
   mounted() {
-    if (window.next) {
-      window.next();
-    }
+
   },
   methods: {
-    callback(){
-      console.log('我是callback');
-      console.log(this);
+    // 视频监听
+    onVideoChange() {
+
     },
-  },
-  unmounted() {
-    console.log('unmounted');
-  },
-  beforeUnmount() {
-    console.log('beforeUnmount');
-  },
-  beforeRouteLeave(){
-    console.log('beforeRouteLeave');
-  },
-  beforeRouteUpdate(){
-    console.log('beforeRouteUpdate');
-  },
-  beforeRouteEnter(){
-    console.log('beforeRouteEnter');
   },
 }
 </script>
@@ -55,11 +38,31 @@ export default {
   position: relative;
 }
 
-#video{
+#video {
   width: 100vw;
   height: 100vh;
   background: black;
   z-index: 998;
+}
+
+.center-opera{
+  position: fixed;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  font-size: 5vw;
+  background: lightgoldenrodyellow;
+  border-radius: 8px;
+  padding: 10px;
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
@@ -69,9 +72,16 @@ export default {
     width: 100vh;
     height: 100vw;
   }
-  #video{
+  #video {
     width: 100vh;
     height: 100vw;
+  }
+
+  .center-opera {
+    position: absolute;
+    top: 50vw;
+    left: 50vh;
+    transform: translate(-50%, -50%);
   }
 }
 

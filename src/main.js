@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import './style.css'
+import './styles/vant-reset.scss'
 import 'lib-flexible'
 import App from './App.vue'
 

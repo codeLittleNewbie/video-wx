@@ -8,5 +8,6 @@
 
 
 <style lang="scss">
-@import "styles/normalize.scss";
+@import "styles/normalize";
+@import "styles/vant-reset";
 </style>
