@@ -1,20 +1,7 @@
 <template>
-  <div class="app-container">
-    <button @click="test">我是登录页面</button>
-    <button @click="replace">replace</button>
-    <div>{{a}}----{{b}}</div>
+  <div>
+    搞什么飞机??
   </div>
-
-  <div>12121212212</div>
-
-  <div v-for="(v, i) in GET_VIEWS_DICLIST['com.test.api']" :key="i">
-    {{$filters.getLabelName(v.code, GET_VIEWS_DICLIST['com.test.api'])}} ---
-    {{v.code}} ---
-    {{v.name}}
-  </div>
-
-
-  <input type="text" placeholder="111">
 </template>
 
 <script>
@@ -77,7 +64,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  .app-container{
-    font-size: 16px;
-  }
+
 </style>

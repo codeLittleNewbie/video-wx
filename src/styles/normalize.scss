@@ -3,6 +3,8 @@
 /* Document
    ========================================================================== */
 
+
+
 /**
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
@@ -22,6 +24,9 @@ html {
 
 body {
     margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 /**
@@ -62,7 +67,7 @@ hr {
  */
 
 pre {
-    font-family: monospace, monospace; /* 1 */
+    //font-family: monospace, monospace; /* 1 */
     font-size: 1em; /* 2 */
 }
 
@@ -105,7 +110,7 @@ strong {
 code,
 kbd,
 samp {
-    font-family: monospace, monospace; /* 1 */
+    //font-family: monospace, monospace; /* 1 */
     font-size: 1em; /* 2 */
 }
 
@@ -162,7 +167,7 @@ input,
 optgroup,
 select,
 textarea {
-    font-family: inherit; /* 1 */
+    //font-family: inherit; /* 1 */
     font-size: 100%; /* 1 */
     line-height: 1.15; /* 1 */
     margin: 0; /* 2 */
@@ -346,4 +351,8 @@ template {
 
 [hidden] {
     display: none;
+}
+
+*{
+    box-sizing: border-box;
 }

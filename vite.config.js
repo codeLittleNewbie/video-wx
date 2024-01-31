@@ -1,5 +1,6 @@
 import vue from "@vitejs/plugin-vue";
 import Components from "unplugin-vue-components/vite";
+// import AutoImport from 'unplugin-auto-import/vite'
 import { VantResolver } from "unplugin-vue-components/resolvers";
 import { defineConfig, loadEnv } from 'vite'
 import { createHtmlPlugin } from "vite-plugin-html";
@@ -13,6 +14,9 @@ export default defineConfig ({
     legacy({
       targets: ['defaults', 'not IE 11']
     }),
+    /*AutoImport({
+      resolvers: [VantResolver()],
+    }),*/
     Components({
       resolvers: [VantResolver()],
     }),
@@ -44,10 +48,17 @@ export default defineConfig ({
     }
   },
   css: {
+    modules: {
+      // 配置 CSS Modules 的选项
+      localsConvention: 'camelCase', // 类名转换为驼峰命名
+    },
     preprocessorOptions: {
       scss: {
         // 全局引入变量样式
-        // additionalData: '@import @/assets/style/normalize.css'
+        additionalData: `
+          @import "@/styles/common.scss";
+          @import "@/styles/normalize.scss";
+          `,
       }
     }
   },
