@@ -7,7 +7,7 @@ export default [
             title: '一级菜单',
             first: true
         },
-        component: () => import('@/view/index.vue'),
+        component: () => import('@/view/home/index.vue'),
         children: []
     }
 ]

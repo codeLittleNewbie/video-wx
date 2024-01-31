@@ -1,6 +1,7 @@
 <template>
-  <div>
-    搞什么飞机??
+  <div class="video-container">
+    <video id="video" src=""></video>
+    <div style="position: absolute;left: 0;top: 0;background: white;">我是选项</div>
   </div>
 </template>
 
@@ -18,32 +19,18 @@ export default {
   data(){
     return {
       b: 4,
-      testIndex: 'testIndex'
     }
   },
   mounted() {
-    console.log(window.next);
     if (window.next) {
       window.next();
     }
   },
   methods: {
-    replace(){
-      this.$router.replace({
-
-      })
-    },
     callback(){
       console.log('我是callback');
       console.log(this);
     },
-    test(){
-      this.a ++;
-      this.b ++;
-
-      window.callback = this.callback;
-      this.$router.push('/next');
-    }
   },
   unmounted() {
     console.log('unmounted');
@@ -64,5 +51,28 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.video-container {
+  position: relative;
+}
+
+#video{
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  z-index: 998;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .video-container {
+    transform: rotate(90deg) translateY(-100vw);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+  }
+  #video{
+    width: 100vh;
+    height: 100vw;
+  }
+}
 
 </style>

@@ -57,7 +57,6 @@ export default defineConfig ({
         // 全局引入变量样式
         additionalData: `
           @import "@/styles/common.scss";
-          @import "@/styles/normalize.scss";
           `,
       }
     }

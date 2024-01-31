@@ -6,3 +6,7 @@
   <router-view></router-view>
 </template>
 
+
+<style lang="scss">
+@import "styles/normalize.scss";
+</style>
