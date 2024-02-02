@@ -2,18 +2,23 @@
   <div class="video-container">
     <video
         ref="video"
+        id="video"
+        webkit-playsinline="true"
+        playsinline="true"
         @play="onPlay"
         @pause="onPause"
         @ended="onEnded"
+        @loadedmetadata="onLoadedMetaData"
         @timeupdate="onTimeUpdate"
-        @click="playBtnClick"
-        id="video" src="@/assets/video/2.mp4"></video>
+        @click="playBtnClick" src="@/assets/video/2.mp4"></video>
 
     <div class="center-opera"
          @click="playBtnClick"
          v-if="showPlayBtn">
       <img src="@/assets/image/play.jpg" alt="">
     </div>
+
+<!--    <block></block>-->
 
     <template v-for="(v, i) in interactionList">
       <!--单选弹窗-->
@@ -31,9 +36,13 @@
 <script>
 import Slide from "@/view/home/components/slide.vue";
 import Radio from "@/view/home/components/radio.vue";
+import Block from "@/view/home/components/block.vue";
 
 export default {
-  components: {Radio, Slide},
+  components: {Radio, Slide, Block},
+  provide() {
+    return {realVideoArea: () => this.realVideoArea}
+  },
   data() {
     return {
       // 视频状态
@@ -42,6 +51,8 @@ export default {
       showPlayBtn: true,
       // 展示特定弹窗
       showToast: '',
+      // 视频真实区域
+      realVideoArea: {},
 
 
       /**
@@ -75,7 +86,10 @@ export default {
     }
   },
   mounted() {
-
+    // 监听resize事件
+    window.addEventListener('resize', () => {
+      this.onLoadedMetaData();
+    })
   },
   methods: {
     // 视频开始
@@ -89,6 +103,41 @@ export default {
     // 视频结束
     onEnded() {
       this.videoStatus = 'ended'
+    },
+    // 视频加载完成
+    onLoadedMetaData() {
+      const video = this.$refs.video;
+      const videoWidth = video.videoWidth;
+      const videoHeight = video.videoHeight;
+      const elementWidth = video.offsetWidth;
+      const elementHeight = video.offsetHeight;
+
+      const videoAspectRatio = videoWidth / videoHeight;
+      const elementAspectRatio = elementWidth / elementHeight;
+
+      let realWidth, realHeight, offsetX, offsetY;
+
+      if (elementAspectRatio > videoAspectRatio) {
+        // 视频在容器中垂直居中，左右有黑边
+        realHeight = elementHeight;
+        realWidth = elementHeight * videoAspectRatio;
+        offsetX = (elementWidth - realWidth) / 2;
+        offsetY = 0;
+      } else {
+        // 视频在容器中水平居中，上下有黑边
+        realWidth = elementWidth;
+        realHeight = elementWidth / videoAspectRatio;
+        offsetX = 0;
+        offsetY = (elementHeight - realHeight) / 2;
+      }
+
+      console.log(`视频实际播放区域尺寸: 宽度=${realWidth}px, 高度=${realHeight}px`);
+      console.log(`偏移: 左=${offsetX}px, 上=${offsetY}px`);
+
+      this.realVideoArea = {
+        width: `${realWidth}px`,
+        height: `${realHeight}px`
+      }
     },
     // 视频播放过程
     onTimeUpdate() {
@@ -152,7 +201,6 @@ export default {
   .center-opera {
     position: fixed;
     font-weight: bold;
-    border: none;
     cursor: pointer;
     top: 50vh;
     left: 50vw;
@@ -162,7 +210,7 @@ export default {
 
   @media (max-width: 768px) and (orientation: portrait) {
     .center-opera {
-      position: absolute;
+      position: fixed;
       top: 50vw;
       left: 50vh;
       transform: translate(-50%, -50%);

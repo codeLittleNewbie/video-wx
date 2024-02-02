@@ -6,16 +6,12 @@ export default {
       slideBoxW: 0,
       // 拖拽物宽度
       iconBoxW: 0,
-
       // 横竖屏状态
       pageX: 'pageX',
-
       // 上一次位置
       lastP: '',
       // 拖拽物左位移
       left: 10,
-      // 拖拽间距
-      dragMargin: 0
     }
   },
   methods: {
