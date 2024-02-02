@@ -7,8 +7,7 @@
         @ended="onEnded"
         @timeupdate="onTimeUpdate"
         @click="playBtnClick"
-        id="video"
-        src="@/assets/video/2.mp4"></video>
+        id="video" src="@/assets/video/2.mp4"></video>
 
     <div class="center-opera"
          @click="playBtnClick"
@@ -16,10 +15,16 @@
       <img src="@/assets/image/play.jpg" alt="">
     </div>
 
-    <!--单选弹窗-->
-    <radio @ok="setPlayTime(11)" v-if="showToast===10"></radio>
-    <!--滑块弹窗-->
-    <slide @ok="setPlayTime(4)" v-if="showToast===3"></slide>
+    <template v-for="(v, i) in interactionList">
+      <!--单选弹窗-->
+      <radio
+          @ok="v.callback"
+          :title="v.radioTitle"
+          :list="v.radioList"
+          v-if="v.type==='radio' && v.type===showToast"></radio>
+      <!--滑块弹窗-->
+      <slide @ok="v.callback" v-if="v.type==='slide' && v.type===showToast"></slide>
+    </template>
   </div>
 </template>
 
@@ -35,13 +40,38 @@ export default {
       videoStatus: 'pause',
       // 是否展示播放按钮
       showPlayBtn: true,
-      // 互动列表
-      interactionList: [
-        {type: 'radio',},
-      ],
-
       // 展示特定弹窗
-      showToast: false
+      showToast: '',
+
+
+      /**
+       * 互动列表
+       * @author lwq
+       * @time 2024-02-02
+       * @param type String 弹窗类型
+       * @param showTime Number 展示弹窗时间 单位s
+       * @param radioTitle String 单选标题
+       * @param radioList Array 单选选项数组
+       * @return callback Function 确认回调函数
+       */
+      interactionList: [
+        {
+          type: 'radio',
+          showTime: 3,
+          radioTitle: '毛泽东三次到才溪分别是哪一年？',
+          radioList: [
+            {label: '1930', value: '1930'},
+            {label: '1940', value: '1940'},
+            {label: '1950', value: '1950'}
+          ],
+          callback: () => this.setPlayTime(4)
+        },
+        {
+          type: 'slide',
+          showTime: 10,
+          callback: () => this.setPlayTime(11)
+        },
+      ],
     }
   },
   mounted() {
@@ -66,20 +96,14 @@ export default {
 
       const tolerance = 0.5; // 容差范围，单位为秒
 
-      // 3s 弹窗
-      if (Math.abs(currentTime - 3) < tolerance) {
-        // 在 currentTime 大约等于 3 秒时执行操作
-        console.log('视频当前时间接近 3 秒');
-        // 执行你的特定操作代码
-
-        this.$refs.video.pause();
-        this.showToast = 3;
-      }
-      // 10s 弹窗
-      else if (Math.abs(currentTime - 10) < tolerance) {
-        this.$refs.video.pause();
-        this.showToast = 10;
-      }
+      // 弹窗
+      this.interactionList.forEach(v => {
+        if (Math.abs(currentTime - v.showTime) < tolerance) {
+          console.log(`视频当前时间接近 ${v.showTime} 秒`);
+          this.$refs.video.pause();
+          this.showToast = v.type;
+        }
+      })
     },
     // 播放按钮点击事件
     playBtnClick() {

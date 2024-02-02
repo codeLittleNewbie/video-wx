@@ -7,7 +7,7 @@ export default {
       // 拖拽物宽度
       iconBoxW: 0,
 
-      //
+      // 横竖屏状态
       pageX: 'pageX',
 
       // 上一次位置

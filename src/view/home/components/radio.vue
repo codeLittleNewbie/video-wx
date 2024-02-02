@@ -3,7 +3,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: '毛泽东三次到才溪分别是哪一年？'
     },
     list: {
       type: Array,
@@ -22,11 +22,12 @@ export default {
 
 <template>
   <div class="center-opera">
-    <div class="radio-title">毛泽东三次到才溪分别是哪一年？</div>
+    <div class="radio-title">{{title}}</div>
     <div class="radio-section mt-20">
-      <div class="radio-section-item" @click="onRadioClick">1930</div>
-      <div class="radio-section-item" @click="onRadioClick">1940</div>
-      <div class="radio-section-item" @click="onRadioClick">1950</div>
+      <div class="radio-section-item"
+           v-for="(v, i) in list"
+           :key="v.value"
+           @click="onRadioClick(v.value)">{{ v.label }}</div>
     </div>
   </div>
 </template>
